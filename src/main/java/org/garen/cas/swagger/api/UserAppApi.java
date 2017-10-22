@@ -59,7 +59,7 @@ public interface UserAppApi {
                                                     @ApiParam(value = "每页数量") @RequestParam(value = "length", required = false) Integer length,
                                                     @ApiParam(value = "用户编码") @RequestParam(value = "userCode", required = false) String userCode,
                                                     @ApiParam(value = "应用编码") @RequestParam(value = "appCode", required = false) String appCode,
-                                                    @ApiParam(value = "上架 0 下架 1") @RequestParam(value = "permission", required = false) String permission);
+                                                    @ApiParam(value = "上架 0 下架 1") @RequestParam(value = "permission", required = false) Boolean permission);
 
 
     @ApiOperation(value = "新增用户应用关系", notes = "新增用户应用关系 ", response = ResponseModel.class, tags={  })
@@ -83,4 +83,12 @@ public interface UserAppApi {
         method = RequestMethod.PUT)
     ResponseEntity<ResponseModel> updateUserApp(@ApiParam(value = "用户应用关系") @RequestBody UserApp app);
 
+    @ApiOperation(value = "编码查询", notes = "编码查询 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/userApp/code",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> getUserAppByCode(@ApiParam(value = "userCode") @RequestParam(value = "userCode", required = false) String userCode,
+                                                   @ApiParam(value = "appCode") @RequestParam(value = "appCode", required = false) String appCode);
 }

@@ -59,7 +59,7 @@ public interface AppApi {
                                                 @ApiParam(value = "每页数量") @RequestParam(value = "length", required = false) Integer length,
                                                 @ApiParam(value = "应用编码") @RequestParam(value = "appCode", required = false) String appCode,
                                                 @ApiParam(value = "应用名称") @RequestParam(value = "appName", required = false) String appName,
-                                                @ApiParam(value = "上架 0 下架 1") @RequestParam(value = "permission", required = false) String permission);
+                                                @ApiParam(value = "上架 0 下架 1") @RequestParam(value = "permission", required = false) Boolean permission);
 
 
     @ApiOperation(value = "新增应用", notes = "新增应用 ", response = ResponseModel.class, tags={  })
@@ -83,4 +83,19 @@ public interface AppApi {
         method = RequestMethod.PUT)
     ResponseEntity<ResponseModel> updateApp(@ApiParam(value = "应用") @RequestBody App app);
 
+    @ApiOperation(value = "应用编码查询", notes = "应用编码查询 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/app/code",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> getAppByCode(@ApiParam(value = "appCode") @RequestParam(value = "appCode", required = false) String appCode);
+
+    @ApiOperation(value = "应用名称查询", notes = "应用名称查询 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/app/name",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> getAppByName(@ApiParam(value = "appName") @RequestParam(value = "appName", required = false) String appName);
 }

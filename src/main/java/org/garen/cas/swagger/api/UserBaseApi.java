@@ -83,6 +83,29 @@ public interface UserBaseApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<ResponseModel> updateUserBase(@ApiParam(value = "用户基本信息") @RequestBody UserBase app);
+    ResponseEntity<ResponseModel> updateUserBase(@ApiParam(value = "用户基本信息") @RequestBody UserBase userBase);
 
+    @ApiOperation(value = "用户编码查询", notes = "用户编码查询 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/userBase/code",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> getUserBaseByCode(@ApiParam(value = "userCode") @RequestParam(value = "userCode", required = false) String userCode);
+
+    @ApiOperation(value = "用户编码查询", notes = "用户编码查询 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/userBase/mobile",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> getUserBaseByMobile(@ApiParam(value = "mobile") @RequestParam(value = "mobile", required = false) String mobile);
+
+    @ApiOperation(value = "用户编码查询", notes = "用户编码查询 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/userBase/email",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> getUserBaseByEmail(@ApiParam(value = "email") @RequestParam(value = "email", required = false) String email);
 }

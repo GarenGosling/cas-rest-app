@@ -19,17 +19,17 @@ public class ResponseModel   {
   private String message = null;
 
   @JsonProperty("data")
-  private String data = null;
+  private Object data = null;
 
   public ResponseModel code(Integer code) {
     this.code = code;
     return this;
   }
 
-   /**
+  /**
    * Get code
    * @return code
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
   public Integer getCode() {
     return code;
@@ -44,10 +44,10 @@ public class ResponseModel   {
     return this;
   }
 
-   /**
+  /**
    * Get message
    * @return message
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
   public String getMessage() {
     return message;
@@ -62,16 +62,16 @@ public class ResponseModel   {
     return this;
   }
 
-   /**
+  /**
    * Get data
    * @return data
-  **/
+   **/
   @ApiModelProperty(value = "")
-  public String getData() {
+  public Object getData() {
     return data;
   }
 
-  public void setData(String data) {
+  public void setData(Object data) {
     this.data = data;
   }
 
@@ -86,8 +86,8 @@ public class ResponseModel   {
     }
     ResponseModel responseModel = (ResponseModel) o;
     return Objects.equals(this.code, responseModel.code) &&
-        Objects.equals(this.message, responseModel.message) &&
-        Objects.equals(this.data, responseModel.data);
+            Objects.equals(this.message, responseModel.message) &&
+            Objects.equals(this.data, responseModel.data);
   }
 
   @Override
@@ -99,7 +99,7 @@ public class ResponseModel   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ResponseModel {\n");
-    
+
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");

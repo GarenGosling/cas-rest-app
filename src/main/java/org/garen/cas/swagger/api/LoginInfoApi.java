@@ -82,4 +82,19 @@ public interface LoginInfoApi {
         method = RequestMethod.PUT)
     ResponseEntity<ResponseModel> updateLoginInfo(@ApiParam(value = "登录信息") @RequestBody LoginInfo app);
 
+    @ApiOperation(value = "登录名", notes = "登录名 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/app/loginName",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> getByLoginName(@ApiParam(value = "loginName") @RequestParam(value = "loginName", required = false) String loginName);
+
+    @ApiOperation(value = "用户编号", notes = "用户编号 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/app/userCode",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> getByUserCode(@ApiParam(value = "userCode") @RequestParam(value = "userCode", required = false) String userCode);
 }
