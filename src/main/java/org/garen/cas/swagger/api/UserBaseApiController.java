@@ -47,8 +47,8 @@ public class UserBaseApiController extends BaseModel implements UserBaseApi {
         if(StringUtils.isNotBlank(msg)){
             return new ResponseEntity<ResponseModel>(badRequestModel(msg), HttpStatus.OK);
         }
-        int i = userBaseManage.findById(id);
-        return new ResponseEntity<ResponseModel>(successModel("查询成功，数量：" + i ), HttpStatus.OK);
+        org.garen.cas.mybatis.domain.UserBase userBase = userBaseManage.findById(id);
+        return new ResponseEntity<ResponseModel>(successModel("查询成功" + userBase), HttpStatus.OK);
     }
 
     public ResponseEntity<ResponseModel> getUserBaseAll() {
@@ -72,13 +72,13 @@ public class UserBaseApiController extends BaseModel implements UserBaseApi {
         if(StringUtils.isNotBlank(msg)){
             return new ResponseEntity<ResponseModel>(badRequestModel(msg), HttpStatus.OK);
         }
-        int i = userBaseManage.saveApp(userBase);
+        int i = userBaseManage.saveUserBase(userBase);
         return new ResponseEntity<ResponseModel>(successModelMsg("新增成功，数量：" + i ), HttpStatus.OK);
     }
 
     public ResponseEntity<ResponseModel> updateUserBase(@ApiParam(value = "用户基本信息"  ) @RequestBody UserBase userBase) {
         String msg = valid.updateValid(userBase);
-        int i = userBaseManage.updateApp(userBase);
+        int i = userBaseManage.updateUserBase(userBase);
         return new ResponseEntity<ResponseModel>(successModelMsg("修改成功，数量：" + i), HttpStatus.OK);
     }
 

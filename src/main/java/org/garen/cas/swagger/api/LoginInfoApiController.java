@@ -53,8 +53,8 @@ public class LoginInfoApiController extends BaseModel implements LoginInfoApi {
         if(StringUtils.isNotBlank(msg)){
             return new ResponseEntity<ResponseModel>(badRequestModel(msg), HttpStatus.OK);
         }
-        int i = loginInfoManage.findById(id);
-        return new ResponseEntity<ResponseModel>(successModel("查询成功，数量：" + i ), HttpStatus.OK);
+        org.garen.cas.mybatis.domain.Login login = loginInfoManage.findById(id);
+        return new ResponseEntity<ResponseModel>(successModel("查询成功" + login ), HttpStatus.OK);
     }
 
     public ResponseEntity<ResponseModel> getLoginInfosAll() {

@@ -3,6 +3,7 @@ package org.garen.cas.service;
 
 import org.garen.cas.mybatis.domain.Login;
 import org.garen.cas.swagger.model.LoginInfo;
+import org.garen.cas.swagger.model.UserApp;
 import org.garen.cas.swagger.model.UserBase;
 import org.garen.cas.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class RegisterManage {
     UserBaseManage userBaseManage;
     @Autowired
     CodeManage codeManage;
+    @Autowired
+    UserAppManage userAppManage;
 
     @Transactional
     public int register(String loginName, String password, String appCodes){
@@ -41,11 +44,21 @@ public class RegisterManage {
         userBase.setUserCode(userCode);
         int i = loginInfoManage.saveLoginInfo(loginInfo);
         int j = userBaseManage.saveUserBase(userBase);
-        if(i==1 && j==1){
+        // 绑定应用
+        UserApp userApp = new UserApp();
+        userApp.setUserCode(userCode);
+        userApp.setPermission(true);
+        String[] split = appCodes.split(",");
+        for(String appCode : split){
+            userApp.setAppCode(appCode);
+        }
+        int k = userAppManage.saveUserApp(userApp);
+        if(i==1 && j==1 && k==1){
             return 1;
         }else{
             return 0;
         }
+
     }
 
 }

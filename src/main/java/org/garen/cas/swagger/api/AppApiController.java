@@ -48,8 +48,8 @@ public class AppApiController extends BaseModel implements AppApi {
         if(StringUtils.isNotBlank(msg)){
             return new ResponseEntity<ResponseModel>(badRequestModel(msg), HttpStatus.OK);
         }
-        int i = appManage.findById(id);
-        return new ResponseEntity<ResponseModel>(successModel("查询成功，数量：" + i ), HttpStatus.OK);
+        org.garen.cas.mybatis.domain.App app = appManage.findById(id);
+        return new ResponseEntity<ResponseModel>(successModel("查询成功", app ), HttpStatus.OK);
     }
 
     public ResponseEntity<ResponseModel> getAppsAll() {

@@ -3,13 +3,10 @@ package org.garen.cas.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
-import org.garen.cas.EsapiUtil;
+import org.garen.cas.util.EsapiUtil;
 import org.garen.cas.mybatis.domain.UserApp;
 import org.garen.cas.mybatis.domain.UserAppQuery;
-import org.garen.cas.mybatis.domain.UserBase;
-import org.garen.cas.mybatis.domain.UserBaseQuery;
 import org.garen.cas.mybatis.service.UserAppService;
-import org.garen.cas.mybatis.service.UserBaseService;
 import org.garen.cas.util.TransferUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,7 +115,7 @@ public class UserAppManage extends BaseManage<Long>{
      * @param userApp
      * @return
      */
-    public int saveApp(org.garen.cas.swagger.model.UserApp userApp){
+    public int saveUserApp(org.garen.cas.swagger.model.UserApp userApp){
         // 类型转换
         UserApp dest = transfer(userApp);
         // 处理业务

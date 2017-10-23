@@ -51,8 +51,8 @@ public class UserAppApiController extends BaseModel implements UserAppApi {
         if(StringUtils.isNotBlank(msg)){
             return new ResponseEntity<ResponseModel>(badRequestModel(msg), HttpStatus.OK);
         }
-        int i = userAppManage.findById(id);
-        return new ResponseEntity<ResponseModel>(successModel("查询成功，数量：" + i ), HttpStatus.OK);
+        org.garen.cas.mybatis.domain.UserApp userApp = userAppManage.findById(id);
+        return new ResponseEntity<ResponseModel>(successModel("查询成功" + userApp ), HttpStatus.OK);
     }
 
     public ResponseEntity<ResponseModel> getUserAppAll() {
@@ -74,7 +74,7 @@ public class UserAppApiController extends BaseModel implements UserAppApi {
         if(StringUtils.isNotBlank(msg)){
             return new ResponseEntity<ResponseModel>(badRequestModel(msg), HttpStatus.OK);
         }
-        int i = userAppManage.saveApp(userApp);
+        int i = userAppManage.saveUserApp(userApp);
         return new ResponseEntity<ResponseModel>(successModelMsg("新增成功，数量：" + i ), HttpStatus.OK);
     }
 

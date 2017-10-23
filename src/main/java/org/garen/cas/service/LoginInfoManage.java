@@ -4,15 +4,12 @@ package org.garen.cas.service;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
-import org.garen.cas.EsapiUtil;
+import org.garen.cas.util.EsapiUtil;
 import org.garen.cas.mybatis.domain.*;
 import org.garen.cas.mybatis.service.LoginService;
-import org.garen.cas.mybatis.service.UserAppService;
-import org.garen.cas.swagger.model.LoginInfo;
 import org.garen.cas.util.TransferUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
