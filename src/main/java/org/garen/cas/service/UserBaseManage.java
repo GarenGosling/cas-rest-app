@@ -3,7 +3,7 @@ package org.garen.cas.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
-import org.garen.cas.EsapiUtil;
+import org.garen.cas.util.EsapiUtil;
 import org.garen.cas.mybatis.domain.App;
 import org.garen.cas.mybatis.domain.AppQuery;
 import org.garen.cas.mybatis.domain.UserBase;
@@ -143,7 +143,7 @@ public class UserBaseManage extends BaseManage<Long>{
      * @param userBase
      * @return
      */
-    public int saveApp(org.garen.cas.swagger.model.UserBase userBase){
+    public int saveUserBase(org.garen.cas.swagger.model.UserBase userBase){
         // 类型转换
         UserBase dest = transfer(userBase);
         // 处理业务
@@ -157,7 +157,7 @@ public class UserBaseManage extends BaseManage<Long>{
      * @param userBase
      * @return
      */
-    public int updateApp(org.garen.cas.swagger.model.UserBase userBase){
+    public int updateUserBase(org.garen.cas.swagger.model.UserBase userBase){
         // 类型转换
         UserBase dest = transfer(userBase);
         // 处理业务
