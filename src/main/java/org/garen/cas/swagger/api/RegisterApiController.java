@@ -5,6 +5,7 @@ package org.garen.cas.swagger.api;
 import io.swagger.annotations.*;
 
 import org.apache.commons.lang3.StringUtils;
+import org.garen.cas.service.LoginManage;
 import org.garen.cas.service.RegisterManage;
 import org.garen.cas.swagger.api.valid.RegisterValid;
 import org.garen.cas.swagger.api.valid.UserAppValid;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-10-19T15:43:37.058Z")
@@ -32,6 +35,8 @@ public class RegisterApiController extends BaseModel implements RegisterApi {
     RegisterManage registerManage;
     @Autowired
     RegisterValid valid;
+    @Autowired
+    LoginManage loginManage;
 
     public ResponseEntity<ResponseModel> register(@ApiParam(value = "登录名称") @RequestParam(value = "loginName", required = false) String loginName,
                                                   @ApiParam(value = "密码") @RequestParam(value = "password", required = false) String password,
@@ -40,8 +45,16 @@ public class RegisterApiController extends BaseModel implements RegisterApi {
         if(StringUtils.isNotBlank(msg)){
             return new ResponseEntity<ResponseModel>(badRequestModel(msg), HttpStatus.OK);
         }
-        registerManage.register(loginName, password, appCodes);
-        return new ResponseEntity<ResponseModel>(HttpStatus.OK);
+        int i = registerManage.register(loginName, password, appCodes);
+        if(i==1){
+            // 注册成功
+            Map<String, Object> map = loginManage.login(loginName, password);
+            if((Boolean) map.get("isLogin")){
+                return new ResponseEntity<ResponseModel>(successModel("注册成功，登录", map), HttpStatus.OK);
+            }
+            return new ResponseEntity<ResponseModel>(badRequestModel("注册成功，登录失败"), HttpStatus.OK);
+        }
+        return new ResponseEntity<ResponseModel>(badRequestModel("注册失败"), HttpStatus.OK);
     }
 
 }

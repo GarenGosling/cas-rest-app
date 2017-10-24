@@ -149,25 +149,61 @@ public class UserAppManage extends BaseManage<Long>{
     }
 
     /**
-     * 根据 userCode & appCode 查询
+     * 通过 userCode & appCode 查询
      *
      * @param userCode
      * @param appCode
      * @return
      */
     public UserApp getByCode(String userCode, String appCode){
+        if(StringUtils.isNotBlank(userCode) && StringUtils.isNotBlank(appCode)){
+            List<UserApp> userApps = getByParams(userCode, appCode);
+            UserApp userApp = null;
+            if(userApps.size() >= 1){
+                userApp = userApps.get(0);
+            }
+            return userApp;
+        }
+        return null;
+    }
+
+    /**
+     * 通过用户编码查询
+     *
+     * @param userCode
+     * @return
+     */
+    public List<UserApp> getByUserCode(String userCode){
+        return getByParams(userCode, null);
+    }
+
+    /**
+     * 通过应用编码查询
+     *
+     * @param appCode
+     * @return
+     */
+    public List<UserApp> getByAppCode(String appCode){
+        return getByParams(null, appCode);
+    }
+
+    /**
+     * 通过 userCode/appCode 查询
+     *
+     * @param userCode
+     * @param appCode
+     * @return
+     */
+    private List<UserApp> getByParams(String userCode, String appCode){
         UserAppQuery query = new UserAppQuery();
         UserAppQuery.Criteria criteria = query.createCriteria();
-        if(StringUtils.isNotBlank(userCode) && StringUtils.isNotBlank(appCode)){
+        if(StringUtils.isNotBlank(userCode)){
             criteria.andUserCodeEqualTo(EsapiUtil.sql(userCode));
+        }
+        if(StringUtils.isNotBlank(appCode)){
             criteria.andAppCodeEqualTo(EsapiUtil.sql(appCode));
         }
-        List<UserApp> userApps = getService().findBy(query);
-        UserApp userApp = null;
-        if(userApps.size() >= 1){
-            userApp = userApps.get(0);
-        }
-        return userApp;
+        return getService().findBy(query);
     }
 
 }

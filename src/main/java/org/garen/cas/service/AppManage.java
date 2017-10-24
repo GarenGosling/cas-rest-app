@@ -8,9 +8,13 @@ import org.garen.cas.mybatis.domain.App;
 import org.garen.cas.mybatis.domain.AppQuery;
 import org.garen.cas.mybatis.service.AppService;
 import org.garen.cas.util.TransferUtil;
+import org.garen.cas.util.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -159,6 +163,42 @@ public class AppManage extends BaseManage<Long>{
     }
 
     /**
+     * 通过userCode查询
+     *
+     * @param userCode
+     * @return
+     */
+    public List<Map<String, Object>> findByUserCodeMap(String userCode){
+        if(StringUtils.isBlank(userCode)){
+            return null;
+        }
+        String sql = "select app.id, app.app_code, app.app_name, app.permission, app.create_time, app.update_time from user_app INNER JOIN app on user_app.app_code = app.app_code where user_app.user_code = '"+EsapiUtil.sql(userCode)+"' and app.permission = 1";
+        return getService().findBySQL(sql);
+    }
+
+    public List<App> findByUserCodeEntity(String userCode){
+        List<Map<String, Object>> maps = findByUserCodeMap(userCode);
+        if(CollectionUtils.isEmpty(maps)){
+            return null;
+        }
+        List<App> apps = new ArrayList<>();
+        for(Map<String, Object> map : maps){
+            if(CollectionUtils.isEmpty(map)){
+               continue;
+            }
+            App app = new App();
+            app.setId((Long) map.get("id"));
+            app.setAppCode((String) map.get("app_code"));
+            app.setAppName((String) map.get("app_name"));
+            app.setPermission(true);
+            app.setCreateTime((Date) map.get("create_time"));
+            app.setUpdateTime((Date) map.get("update_time"));
+            apps.add(app);
+        }
+        return apps;
+    }
+
+    /**
      * 类型转换
      *
      * @param app
@@ -193,4 +233,5 @@ public class AppManage extends BaseManage<Long>{
         }
         return app;
     }
+
 }

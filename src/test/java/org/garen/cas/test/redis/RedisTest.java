@@ -27,8 +27,8 @@ public class RedisTest {
 
     @Test
     public void test(){
-        redisService.set("activity123", "Hello Redis123!!!");
-        System.out.println(redisService.get("activity123"));
+        redisService.set("lxl", "Hello liuxueliang!!!");
+        System.out.println(redisService.get("lxl"));
     }
 
 }

@@ -104,4 +104,7 @@ dependencies {
     compile group: 'com.lowagie', name: 'itext', version: '2.1.7'
 
     runtime('mysql:mysql-connector-java')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
 }
