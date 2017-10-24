@@ -16,12 +16,9 @@
     <script th:inline="javascript">
 
         function login() {
-            alert($.cookie("ticket"));
-            var loginName = $("#loginName").val();
-            var password = $("#password").val();
             var params = {};
-            params.loginName = loginName;
-            params.password = password;
+            params.loginName = $("#loginName").val();
+            params.password = $("#password").val();
             $.ajax({
                 url: 'http://120.27.22.41:9090/login',
                 type: 'POST',
@@ -31,10 +28,13 @@
                     if(response.code == 200){
                         var ticket = response.data.ticket;
 //                        localStorage.setItem("ticket",ticket);
-                        //var ticket_get=localStorage.getItem("ticket");
+//                        var ticket_get=localStorage.getItem("ticket");
 //                        $.cookie('ticket', ticket, { expires: 7 });
                         window.location.href = "http://120.27.22.41:8081?ticket="+ticket;
+                    }else{
+                        alert("登录失败，测试用户名：garen 密码：Garen666");
                     }
+
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("fail");
