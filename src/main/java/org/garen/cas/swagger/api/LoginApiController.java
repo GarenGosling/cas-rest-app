@@ -13,11 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -39,6 +35,11 @@ public class LoginApiController extends BaseModel implements LoginApi {
             return new ResponseEntity<ResponseModel>(successModel("登录", map), HttpStatus.OK);
         }
         return new ResponseEntity<ResponseModel>(badRequestModel("登录失败"), HttpStatus.OK);
+    }
+
+    @Override
+    public String toLogin(){
+        return "login";
     }
 
 }

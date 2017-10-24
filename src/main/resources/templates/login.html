@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <div style="width:600px;height:400px;">
+            用户名：<input type="text" id="loginName" name="loginName"/><br/>
+            密码：<input type="password" id="password" name="password"/><br/>
+            <input type="button" onclick="login()" value="登录"/>
+    </div>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+    <script type="text/javascript" th:src="@{/js/urlHandler.js}"></script>
+    <script th:inline="javascript">
+
+        function login() {
+            alert($.cookie("ticket"));
+            var loginName = $("#loginName").val();
+            var password = $("#password").val();
+            var params = {};
+            params.loginName = loginName;
+            params.password = password;
+            $.ajax({
+                url: 'http://120.27.22.41:9090/login',
+                type: 'POST',
+                data: params,
+                success: function (response) {
+                    console.log(response);
+                    if(response.code == 200){
+                        var ticket = response.data.ticket;
+//                        localStorage.setItem("ticket",ticket);
+                        //var ticket_get=localStorage.getItem("ticket");
+//                        $.cookie('ticket', ticket, { expires: 7 });
+                        window.location.href = "http://120.27.22.41:8081?ticket="+ticket;
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("fail");
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

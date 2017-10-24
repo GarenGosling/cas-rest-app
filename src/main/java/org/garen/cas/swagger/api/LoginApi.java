@@ -30,4 +30,7 @@ public interface LoginApi {
     ResponseEntity<ResponseModel> login(@ApiParam(value = "登录名称") @RequestParam(value = "loginName", required = false) String loginName,
                                         @ApiParam(value = "密码") @RequestParam(value = "password", required = false) String password);
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    String toLogin();
+
 }
