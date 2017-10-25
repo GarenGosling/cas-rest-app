@@ -40,6 +40,7 @@ public class LoginManage {
     @Autowired
     private RedisService redisService;
 
+    public final static String LOGIN_KEY = "loginInfo";
     /**
      * 登录
      *
@@ -72,13 +73,13 @@ public class LoginManage {
         res.put("ticket", ticket);
         // 登录信息保存到redis
         String loginVoJson = new JsonMapper().toJson(loginVo);
-        redisService.putH("loginInfo", ticket, loginVoJson);
+        redisService.putH(LOGIN_KEY, ticket, loginVoJson);
         res.put("isLogin", true);   // 登录成功
         return res;
     }
 
     public boolean logout(String ticket){
-        Long i = redisService.delH(ticket, "loginInfo");
+        Long i = redisService.delH(LOGIN_KEY, ticket);
         if(i == 1){
             return true;
         }
@@ -89,7 +90,7 @@ public class LoginManage {
         if(StringUtils.isBlank(ticket)){
             return null;
         }
-        String loginInfo = redisService.getH(ticket, "loginInfo");
+        String loginInfo = redisService.getH(LOGIN_KEY, ticket);
         return new JsonMapper().fromJson(loginInfo, LoginVo.class);
     }
 
@@ -97,7 +98,7 @@ public class LoginManage {
         if(StringUtils.isBlank(ticket)){
             return false;
         }
-        return redisService.hasH(ticket, "loginInfo");
+        return redisService.hasH(LOGIN_KEY, ticket);
     }
 
 }

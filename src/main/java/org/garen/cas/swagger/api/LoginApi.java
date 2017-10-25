@@ -52,14 +52,16 @@ public interface LoginApi {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
             @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
-    @RequestMapping(value = "/logout2",
+    @RequestMapping(value = "/logout",
             method = RequestMethod.GET)
-    ResponseEntity<ResponseModel> logout2(HttpServletRequest request, HttpServletResponse response);
+    ResponseEntity<ResponseModel> logout(HttpServletRequest request, HttpServletResponse response);
 
+    @ApiOperation(value = "跳转到登录页面", notes = "跳转到登录页面 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     String toLogin();
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    String logout(HttpServletRequest request, HttpServletResponse response);
 
 }

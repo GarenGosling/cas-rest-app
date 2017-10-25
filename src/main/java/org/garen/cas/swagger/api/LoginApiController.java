@@ -41,7 +41,6 @@ public class LoginApiController extends BaseModel implements LoginApi {
         return new ResponseEntity<ResponseModel>(badRequestModel("登录失败"), HttpStatus.OK);
     }
 
-    @Override
     public ResponseEntity<ResponseModel> getLoginVo(HttpServletRequest request, HttpServletResponse response) {
         String ticket = request.getHeader("ticket");
         if(StringUtils.isBlank(ticket)){
@@ -54,7 +53,6 @@ public class LoginApiController extends BaseModel implements LoginApi {
         return new ResponseEntity<ResponseModel>(successModel("获取登录信息成功", loginVo), HttpStatus.OK);
     }
 
-    @Override
     public ResponseEntity<ResponseModel> isLogin(HttpServletRequest request, HttpServletResponse response) {
         String ticket = request.getHeader("ticket");
         boolean isLogin = loginManage.isLogin(ticket);
@@ -64,9 +62,7 @@ public class LoginApiController extends BaseModel implements LoginApi {
         return new ResponseEntity<ResponseModel>(badRequestModel("未登录"), HttpStatus.OK);
     }
 
-
-    @Override
-    public ResponseEntity<ResponseModel> logout2(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<ResponseModel> logout(HttpServletRequest request, HttpServletResponse response) {
         String ticket = request.getHeader("ticket");
         if(StringUtils.isBlank(ticket)){
             return new ResponseEntity<ResponseModel>(badRequestModel("退出登录失败，没有登录票据"), HttpStatus.OK);
@@ -81,19 +77,6 @@ public class LoginApiController extends BaseModel implements LoginApi {
     @Override
     public String toLogin(){
         return "login";
-    }
-
-    @Override
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        String ticket = request.getHeader("ticket");
-        if(StringUtils.isBlank(ticket)){
-            return "logout_fail";
-        }
-        boolean logout = loginManage.logout(ticket);
-        if(logout){
-            return "logout_success";
-        }
-        return "logout_error";
     }
 
 
