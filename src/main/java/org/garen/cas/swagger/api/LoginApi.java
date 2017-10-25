@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-10-19T15:43:37.058Z")
@@ -30,7 +32,19 @@ public interface LoginApi {
     ResponseEntity<ResponseModel> login(@ApiParam(value = "登录名称") @RequestParam(value = "loginName", required = false) String loginName,
                                         @ApiParam(value = "密码") @RequestParam(value = "password", required = false) String password);
 
+    @ApiOperation(value = "退出登录", notes = "退出登录 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/logout2",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> logout2(HttpServletRequest request, HttpServletResponse response);
+
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     String toLogin();
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    String logout(HttpServletRequest request, HttpServletResponse response);
 
 }

@@ -4,6 +4,7 @@ package org.garen.cas.swagger.api;
 
 import io.swagger.annotations.*;
 
+import org.apache.commons.lang3.StringUtils;
 import org.garen.cas.service.LoginInfoManage;
 import org.garen.cas.service.LoginManage;
 import org.garen.cas.swagger.model.BaseModel;
@@ -16,6 +17,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -38,8 +41,35 @@ public class LoginApiController extends BaseModel implements LoginApi {
     }
 
     @Override
+    public ResponseEntity<ResponseModel> logout2(HttpServletRequest request, HttpServletResponse response) {
+        String ticket = request.getHeader("ticket");
+        if(StringUtils.isBlank(ticket)){
+            return new ResponseEntity<ResponseModel>(badRequestModel("退出登录失败，没有登录票据"), HttpStatus.OK);
+        }
+        boolean logout = loginManage.logout(ticket);
+        if(logout){
+            return new ResponseEntity<ResponseModel>(successModel("退出登录成功"), HttpStatus.OK);
+        }
+        return new ResponseEntity<ResponseModel>(badRequestModel("退出登录失败，系统异常"), HttpStatus.OK);
+    }
+
+    @Override
     public String toLogin(){
         return "login";
     }
+
+    @Override
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        String ticket = request.getHeader("ticket");
+        if(StringUtils.isBlank(ticket)){
+            return "logout_fail";
+        }
+        boolean logout = loginManage.logout(ticket);
+        if(logout){
+            return "logout_success";
+        }
+        return "logout_error";
+    }
+
 
 }

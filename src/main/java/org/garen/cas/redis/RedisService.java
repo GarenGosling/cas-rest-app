@@ -247,6 +247,10 @@ public class RedisService {
         return redisTemplate.opsForHash().hasKey(key,hashKey);
     }
 
+    public Long delH(String key, String hashKey) {
+        return redisTemplate.opsForHash().delete(key, hashKey);
+    }
+
     /**
      * 获取自增的值
      * @param key

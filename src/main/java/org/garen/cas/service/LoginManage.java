@@ -76,5 +76,12 @@ public class LoginManage {
         return res;
     }
 
+    public boolean logout(String ticket){
+        Long i = redisService.delH(ticket, "loginInfo");
+        if(i == 1){
+            return true;
+        }
+        return false;
+    }
 
 }
