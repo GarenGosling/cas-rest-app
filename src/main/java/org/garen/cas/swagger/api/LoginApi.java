@@ -48,6 +48,14 @@ public interface LoginApi {
             method = RequestMethod.GET)
     ResponseEntity<ResponseModel> isLogin(HttpServletRequest request, HttpServletResponse response);
 
+    @ApiOperation(value = "登录验证", notes = "登录验证 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/isLogin",
+            method = RequestMethod.POST)
+    ResponseEntity<ResponseModel> isLogin(@ApiParam(value = "登录凭证") @RequestParam(value = "ticket", required = false) String ticket);
+
     @ApiOperation(value = "退出登录", notes = "退出登录 ", response = ResponseModel.class, tags={  })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),

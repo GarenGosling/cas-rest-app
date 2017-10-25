@@ -62,6 +62,18 @@ public class LoginApiController extends BaseModel implements LoginApi {
         return new ResponseEntity<ResponseModel>(badRequestModel("未登录"), HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<ResponseModel> isLogin(@ApiParam(value = "登录凭证") @RequestParam(value = "ticket", required = false) String ticket) {
+        if(StringUtils.isBlank(ticket)){
+            return new ResponseEntity<ResponseModel>(badRequestModel("未登录"), HttpStatus.OK);
+        }
+        boolean isLogin = loginManage.isLogin(ticket);
+        if(isLogin){
+            return new ResponseEntity<ResponseModel>(successModel("已登录"), HttpStatus.OK);
+        }
+        return new ResponseEntity<ResponseModel>(badRequestModel("未登录"), HttpStatus.OK);
+    }
+
     public ResponseEntity<ResponseModel> logout(HttpServletRequest request, HttpServletResponse response) {
         String ticket = request.getHeader("ticket");
         if(StringUtils.isBlank(ticket)){
