@@ -57,4 +57,9 @@ public class RegisterApiController extends BaseModel implements RegisterApi {
         return new ResponseEntity<ResponseModel>(badRequestModel("注册失败"), HttpStatus.OK);
     }
 
+    @Override
+    public String toRegister() {
+        return "register";
+    }
+
 }

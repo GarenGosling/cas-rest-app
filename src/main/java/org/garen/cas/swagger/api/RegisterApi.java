@@ -32,4 +32,7 @@ public interface RegisterApi {
                                            @ApiParam(value = "密码") @RequestParam(value = "password", required = false) String password,
                                            @ApiParam(value = "应用编码拼串，以英文逗号分隔") @RequestParam(value = "appCodes", required = false) String appCodes);
 
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    String toRegister();
+
 }
