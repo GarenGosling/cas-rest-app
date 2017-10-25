@@ -1,6 +1,7 @@
 package org.garen.cas.service;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.garen.cas.mybatis.domain.App;
 import org.garen.cas.mybatis.domain.Login;
 import org.garen.cas.mybatis.domain.UserApp;
@@ -82,6 +83,21 @@ public class LoginManage {
             return true;
         }
         return false;
+    }
+
+    public LoginVo getLoginVoByTicket(String ticket){
+        if(StringUtils.isBlank(ticket)){
+            return null;
+        }
+        String loginInfo = redisService.getH(ticket, "loginInfo");
+        return new JsonMapper().fromJson(loginInfo, LoginVo.class);
+    }
+
+    public boolean isLogin(String ticket){
+        if(StringUtils.isBlank(ticket)){
+            return false;
+        }
+        return redisService.hasH(ticket, "loginInfo");
     }
 
 }

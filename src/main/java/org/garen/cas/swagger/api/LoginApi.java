@@ -32,6 +32,22 @@ public interface LoginApi {
     ResponseEntity<ResponseModel> login(@ApiParam(value = "登录名称") @RequestParam(value = "loginName", required = false) String loginName,
                                         @ApiParam(value = "密码") @RequestParam(value = "password", required = false) String password);
 
+    @ApiOperation(value = "获取登录信息", notes = "获取登录信息 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/loginVo",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> getLoginVo(HttpServletRequest request, HttpServletResponse response);
+
+    @ApiOperation(value = "登录验证", notes = "登录验证 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/isLogin",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> isLogin(HttpServletRequest request, HttpServletResponse response);
+
     @ApiOperation(value = "退出登录", notes = "退出登录 ", response = ResponseModel.class, tags={  })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
@@ -39,7 +55,6 @@ public interface LoginApi {
     @RequestMapping(value = "/logout2",
             method = RequestMethod.GET)
     ResponseEntity<ResponseModel> logout2(HttpServletRequest request, HttpServletResponse response);
-
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     String toLogin();

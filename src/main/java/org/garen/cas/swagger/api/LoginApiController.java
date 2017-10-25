@@ -9,6 +9,7 @@ import org.garen.cas.service.LoginInfoManage;
 import org.garen.cas.service.LoginManage;
 import org.garen.cas.swagger.model.BaseModel;
 import org.garen.cas.swagger.model.ResponseModel;
+import org.garen.cas.vo.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,30 @@ public class LoginApiController extends BaseModel implements LoginApi {
         }
         return new ResponseEntity<ResponseModel>(badRequestModel("登录失败"), HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<ResponseModel> getLoginVo(HttpServletRequest request, HttpServletResponse response) {
+        String ticket = request.getHeader("ticket");
+        if(StringUtils.isBlank(ticket)){
+            return new ResponseEntity<ResponseModel>(badRequestModel("获取登录信息失败，没有登录票据"), HttpStatus.OK);
+        }
+        LoginVo loginVo = loginManage.getLoginVoByTicket(ticket);
+        if(loginVo == null){
+            return new ResponseEntity<ResponseModel>(badRequestModel("获取登录信息失败，登录信息为空"), HttpStatus.OK);
+        }
+        return new ResponseEntity<ResponseModel>(successModel("获取登录信息成功", loginVo), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseModel> isLogin(HttpServletRequest request, HttpServletResponse response) {
+        String ticket = request.getHeader("ticket");
+        boolean isLogin = loginManage.isLogin(ticket);
+        if(isLogin){
+            return new ResponseEntity<ResponseModel>(successModel("已登录"), HttpStatus.OK);
+        }
+        return new ResponseEntity<ResponseModel>(badRequestModel("未登录"), HttpStatus.OK);
+    }
+
 
     @Override
     public ResponseEntity<ResponseModel> logout2(HttpServletRequest request, HttpServletResponse response) {
