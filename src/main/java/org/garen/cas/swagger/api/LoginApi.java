@@ -40,6 +40,14 @@ public interface LoginApi {
             method = RequestMethod.GET)
     ResponseEntity<ResponseModel> getLoginVo(HttpServletRequest request, HttpServletResponse response);
 
+    @ApiOperation(value = "获取登录信息", notes = "获取登录信息 ", response = ResponseModel.class, tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
+            @ApiResponse(code = 200, message = "unexpected error", response = ResponseModel.class) })
+    @RequestMapping(value = "/loginVo2",
+            method = RequestMethod.GET)
+    ResponseEntity<ResponseModel> getLoginVo2(@ApiParam(value = "登录凭证") @RequestParam(value = "ticket", required = false) String ticket);
+
     @ApiOperation(value = "登录验证", notes = "登录验证 ", response = ResponseModel.class, tags={  })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful response", response = ResponseModel.class),
