@@ -7,14 +7,14 @@ function register() {
     params.password = $("#password").val();
     params.appCodes = getPermissionAppCodes();
     $.ajax({
-        url: 'http://120.27.22.41:9090/register',
+        url: 'http://'+ip_callback+':9090/register',
         type: 'POST',
         data: params,
         success: function (response) {
             console.log(response);
             if(response.code == 200){
                 var ticket = response.data.ticket;
-                window.location.href = "http://120.27.22.41:8081?ticket="+ticket;
+                window.location.href = "http://"+ip_callback+":8081?ticket="+ticket;
             }else{
                 alert("登录失败，测试用户名：garen 密码：Garen666");
             }

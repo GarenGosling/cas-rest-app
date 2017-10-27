@@ -6,14 +6,14 @@ function login() {
     params.loginName = $("#loginName").val();
     params.password = $("#password").val();
     $.ajax({
-        url: 'http://120.27.22.41:9090/login',
+        url: 'http://'+ip_callback+':9090/login',
         type: 'POST',
         data: params,
         success: function (response) {
             console.log(response);
             if(response.code == 200){
                 var ticket = response.data.ticket;
-                window.location.href = "http://120.27.22.41:8081?ticket="+ticket;
+                window.location.href = "http://"+ip_callback+":8081?ticket="+ticket;
             }else{
                 alert("用户名或密码不正确");
             }
